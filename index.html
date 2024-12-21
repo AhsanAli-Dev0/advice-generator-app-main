@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Kumbh+Sans:wght@100..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    body{
+      background:hsl(218, 23%, 16%) ;
+      color: white;
+      box-sizing: border-box;
+      margin: 0px;
+      padding:0px;
+    }
+    .row{
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card{
+      width: 456px;
+      background: hsl(217, 19%, 24%) ;
+      border-radius: 18px ;
+      text-align: center;
+      padding: 12px 8px;
+
+    }
+    #advice-id{
+      margin-bottom: 20px;
+      font-family: "Epilogue", serif;
+      color: hsl(150, 100%, 66%);
+    }
+    #advice-text{
+      font-family: "Epilogue", serif;
+      font-weight: 700;
+      line-height: 2.3;
+    }
+    .text-changer{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .icon span {
+      position: relative;
+    }
+    .icon span img{
+      
+      background: hsl(150, 100%, 66%);
+      padding: 8px;
+      border-radius: 100%;
+      position: absolute;
+      left:-13px;
+      top: -8px;
+    }
+    .mobile{
+   display: none;
+   
+    }
+    .desktop{
+      margin: 10px 0px;
+    }
+@media screen and (max-width:420px) {
+  .card{
+    width: 90%;
+    margin: auto;
+  }
+  .mobile{
+   display: block;
+   text-align: center;
+    }
+    .desktop{
+      display: none;
+    }
+}
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-title">
+           <h4 id="advice-id"></h4>
+          </div>
+          <div class="card-text">
+            <p id="advice-text"> </p>
+          </div>
+          <div  class="text-changer">
+         <img  class="mobile" src="./images/pattern-divider-mobile.svg" alt="">
+         <img  class="desktop" src="./images/pattern-divider-desktop.svg" alt="">
+          </div>
+          <div id="btn" class="icon">
+            <span> <img src="images/icon-dice.svg" alt=""></span>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  Advice #<!-- Advice ID goes here -->
+
+  "<!-- Advice text goes here -->"
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="https://github.com/AhsanAli-Dev0">Ahsan Ali</a>.
+  </div>
+  <script>
+    const adviceId=document.getElementById('advice-id')
+    const adviceText=document.getElementById('advice-text')
+      const btn=document.getElementById('btn')
+    async function getData(id) {
+      const api=await fetch(`https://api.adviceslip.com/advice/${id}`)
+      console.log(api);
+      const data=await api.json()
+      console.log(data);
+      
+      adviceId.textContent = `Advice Id # ${data.slip.id}`
+      adviceText.textContent = `" ${data.slip.advice} "`
+      
+    }
+    getData(117)
+
+    async function getRandomData() {
+      const api=await fetch('https://api.adviceslip.com/advice')
+      console.log(api);
+      const data=await api.json()
+      console.log(data);
+      
+      adviceId.textContent = `Advice Id # ${data.slip.id}`
+      adviceText.textContent = `" ${data.slip.advice} "`
+      
+    }
+    btn.addEventListener('click', ()=>{
+     getRandomData()
+    })
+  </script>
+</body>
+</html>
